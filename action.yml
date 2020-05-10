@@ -1,0 +1,8 @@
+name: "git merge diff"
+description: "generate git merge diff between tags"
+runs:
+  using: "node12"
+  main: "dist/index.js"
+branding:
+  icon: "git-merge"
+  color: "black"
