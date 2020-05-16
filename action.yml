@@ -1,5 +1,14 @@
 name: "git merge diff"
 description: "generate git merge diff between tags"
+inputs:
+  from:
+    description: "from tag"
+    required: false
+    default: "prev"
+  to:
+    description: "to tag"
+    required: false
+    default: "latest"
 runs:
   using: "node12"
   main: "dist/index.js"

@@ -960,7 +960,25 @@ module.exports = require("os");
 const core = __webpack_require__(470)
 const exec = __webpack_require__(986)
 
+function getTag(tags, name) {
+    if (name == "prev") {
+        if (tags.length < 2) {
+            core.setFailed("need more than 2 tags.")
+            return ""
+        }
+
+        return tags[tags.length - 2]
+    } else if (name == "latest") {
+        return tags[tags.length - 1]
+    } else {
+        return name
+    }
+}
+
 async function run() {
+    const from = core.getInput("from")
+    const to = core.getInput("to")
+
     let output = ''
     const options = {};
     options.listeners = {
@@ -980,12 +998,15 @@ async function run() {
 
     output = ''
 
-    if (tags.length < 2) {
-        core.setFailed("need more than 2 tags.")
+    const from_tag = getTag(tags, from)
+    const to_tag = getTag(tags, to)
+
+    if (from_tag.length == 0 || to_tag.length == 0) {
+        core.setFailed("from or to is invalid")
         return
     }
 
-    const command = `git log ${tags[tags.length - 2]}..${tags[tags.length - 1]} --merges --reverse --pretty=format:"* %b"`
+    const command = `git log ${from_tag}..${to_tag} --merges --reverse --pretty=format:"* %b"`
     console.log(command)
 
     await exec.exec(command, [], options).catch(error => {
