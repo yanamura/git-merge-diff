@@ -2,7 +2,6 @@ name: Diff
 
 on:
   push:
-    branches: [ master ]
 
 jobs:
   build:
@@ -10,7 +9,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      - run: git fetch --prune --unshallow
+      - run: git fetch -p
+      - run: git tag --sort version:refname
       - name: Diff
         id: diff
         uses: ./
