@@ -19,7 +19,13 @@ module.exports =
 /******/ 		};
 /******/
 /******/ 		// Execute the module function
-/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+/******/ 		var threw = true;
+/******/ 		try {
+/******/ 			modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+/******/ 			threw = false;
+/******/ 		} finally {
+/******/ 			if(threw) delete installedModules[moduleId];
+/******/ 		}
 /******/
 /******/ 		// Flag the module as loaded
 /******/ 		module.l = true;
@@ -34,7 +40,7 @@ module.exports =
 /******/ 	// the startup function
 /******/ 	function startup() {
 /******/ 		// Load entry module and return exports
-/******/ 		return __webpack_require__(104);
+/******/ 		return __webpack_require__(198);
 /******/ 	};
 /******/
 /******/ 	// run startup
@@ -954,87 +960,108 @@ module.exports = require("os");
 
 /***/ }),
 
-/***/ 104:
-/***/ (function(__unusedmodule, __unusedexports, __webpack_require__) {
-
-const core = __webpack_require__(470)
-const exec = __webpack_require__(986)
-
-function getTag(tags, name) {
-    if (name == "prev") {
-        if (tags.length < 2) {
-            core.setFailed("need more than 2 tags.")
-            return ""
-        }
-
-        return tags[tags.length - 2]
-    } else if (name == "latest") {
-        return tags[tags.length - 1]
-    } else {
-        return name
-    }
-}
-
-async function run() {
-    const from = core.getInput("from")
-    const to = core.getInput("to")
-
-    let output = ''
-    const options = {};
-    options.listeners = {
-        stdout: (data) => {
-            output += data.toString();
-        }
-    }
-
-    const tag_command = 'git tag --sort version:refname'
-    console.log(tag_command)
-    await exec.exec(tag_command, [], options).catch(error => {
-        core.setFailed(error.message)
-    })
-
-    const tags = output.split('\n').filter(Boolean)
-    console.log(tags)
-
-    output = ''
-
-    const from_tag = getTag(tags, from)
-    const to_tag = getTag(tags, to)
-
-    if (from_tag.length == 0 || to_tag.length == 0) {
-        core.setFailed("from or to is invalid")
-        return
-    }
-
-    const command = `git log ${from_tag}..${to_tag} --merges --reverse --pretty=format:"* %b"`
-    console.log(command)
-
-    await exec.exec(command, [], options).catch(error => {
-        core.setFailed(error.message)
-    })
-
-    console.log(output)
-
-    output = output.replace(/%/g, '%25')
-    output = output.replace(/\n/g, '%0A')
-    output = output.replace(/\r/g, '%0D')
-
-    console.log(output)
-
-    const setoutput_command = `echo "::set-output name=diff::${output}"`
-    exec.exec(setoutput_command).catch(error => {
-        core.setFailed(error.message)
-    })
-}
-
-run()
-
-/***/ }),
-
 /***/ 129:
 /***/ (function(module) {
 
 module.exports = require("child_process");
+
+/***/ }),
+
+/***/ 198:
+/***/ (function(__unusedmodule, exports, __webpack_require__) {
+
+"use strict";
+
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const core = __importStar(__webpack_require__(470));
+const exec = __importStar(__webpack_require__(986));
+function getTag(tags, name) {
+    if (name === 'prev') {
+        if (tags.length < 2) {
+            core.setFailed('need more than 2 tags.');
+            return '';
+        }
+        return tags[tags.length - 2];
+    }
+    else if (name === 'latest') {
+        return tags[tags.length - 1];
+    }
+    else {
+        return name;
+    }
+}
+function run() {
+    return __awaiter(this, void 0, void 0, function* () {
+        const from = core.getInput('from');
+        const to = core.getInput('to');
+        let output = '';
+        const options = {
+            listeners: {
+                stdout: (data) => {
+                    output += data.toString();
+                }
+            }
+        };
+        const tagCommand = 'git tag --sort version:refname';
+        core.info(tagCommand);
+        yield exec.exec(tagCommand, [], options).catch(error => {
+            core.setFailed(error.message);
+        });
+        const tags = output.split('\n').filter(Boolean);
+        core.info(tags.toString());
+        output = '';
+        const fromTag = getTag(tags, from);
+        const toTag = getTag(tags, to);
+        if (fromTag.length === 0 || toTag.length === 0) {
+            core.setFailed('from or to is invalid');
+            return;
+        }
+        const command = `git log ${fromTag}..${toTag} --merges --reverse --pretty=format:"* %b"`;
+        core.info(command);
+        yield exec.exec(command, [], options).catch(error => {
+            core.setFailed(error.message);
+        });
+        core.info(output);
+        output = output.replace(/%/g, '%25');
+        output = output.replace(/\n/g, '%0A');
+        output = output.replace(/\r/g, '%0D');
+        core.info(output);
+        const setoutputCommand = `echo "::set-output name=diff::${output}"`;
+        exec.exec(setoutputCommand).catch(error => {
+            core.setFailed(error.message);
+        });
+    });
+}
+run();
+
 
 /***/ }),
 
