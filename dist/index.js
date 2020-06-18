@@ -1022,6 +1022,7 @@ function run() {
     return __awaiter(this, void 0, void 0, function* () {
         const from = core.getInput('from');
         const to = core.getInput('to');
+        const shouldUseFirstParent = core.getInput('first-parent');
         let output = '';
         const options = {
             listeners: {
@@ -1044,7 +1045,8 @@ function run() {
             core.setFailed('from or to is invalid');
             return;
         }
-        const command = `git log ${fromTag}..${toTag} --merges --reverse --pretty=format:"* %b"`;
+        const firstParentOption = shouldUseFirstParent ? '--first-parent' : '';
+        const command = `git log ${fromTag}..${toTag} --merges ${firstParentOption} --reverse --pretty=format:"* %b"`;
         core.info(command);
         yield exec.exec(command, [], options).catch(error => {
             core.setFailed(error.message);

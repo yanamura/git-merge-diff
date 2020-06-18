@@ -9,6 +9,10 @@ inputs:
     description: "to tag"
     required: false
     default: "latest"
+  first-parent:
+    description: "whether use --first-parent ro not"
+    required: false
+    default: true
 runs:
   using: "node12"
   main: "dist/index.js"

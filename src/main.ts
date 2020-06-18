@@ -19,6 +19,7 @@ function getTag(tags: string[], name: string): string {
 async function run(): Promise<void> {
   const from = core.getInput('from')
   const to = core.getInput('to')
+  const shouldUseFirstParent = core.getInput('first-parent')
 
   let output = ''
   const options = {
@@ -48,7 +49,8 @@ async function run(): Promise<void> {
     return
   }
 
-  const command = `git log ${fromTag}..${toTag} --merges --reverse --pretty=format:"* %b"`
+  const firstParentOption = shouldUseFirstParent ? '--first-parent' : ''
+  const command = `git log ${fromTag}..${toTag} --merges ${firstParentOption} --reverse --pretty=format:"* %b"`
   core.info(command)
 
   await exec.exec(command, [], options).catch(error => {
