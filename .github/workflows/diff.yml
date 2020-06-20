@@ -9,7 +9,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      - run: git fetch -p
+        with:
+          fetch-depth: 0
       - run: git tag --sort version:refname
       - name: Diff
         id: diff
