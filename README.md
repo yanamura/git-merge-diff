@@ -7,7 +7,8 @@ This action generate git merge diff between tags.
 ## Diff between latest and previous tag
 ```yaml
 - uses: actions/checkout@v2
-- run: git fetch --prune --unshallow
+  with:
+    fetch-depth: 0
 - name: Diff
     id: diff
     uses: yanamura/git-merge-diff@v1
@@ -17,7 +18,8 @@ or
 
 ```yaml
 - uses: actions/checkout@v2
-- run: git fetch --prune --unshallow
+  with:
+    fetch-depth: 0
 - name: Diff
     id: diff
     uses: yanamura/git-merge-diff@v1
@@ -29,7 +31,8 @@ or
 ## Diff between HEAD and latest tag
 ```yaml
 - uses: actions/checkout@v2
-- run: git fetch --prune --unshallow
+  with:
+    fetch-depth: 0
 - name: Diff
     id: diff
     uses: yanamura/git-merge-diff@v1
@@ -41,7 +44,8 @@ or
 ## Diff between specified tags
 ```yaml
 - uses: actions/checkout@v2
-- run: git fetch --prune --unshallow
+  with:
+    fetch-depth: 0
 - name: Diff
     id: diff
     uses: yanamura/git-merge-diff@v1
@@ -62,7 +66,8 @@ steps.<step id>.outputs.diff
 
 ```yaml
 - uses: actions/checkout@v2
-- run: git fetch --prune --unshallow
+  with:
+    fetch-depth: 0
 - name: Diff
     id: diff
     uses: yanamura/git-merge-diff@v1
