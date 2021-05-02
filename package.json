@@ -10,12 +10,12 @@
         "all": "npm run build && npm run format && npm run lint && npm run pack"
     },
     "dependencies": {
-        "@actions/core": "^1.2.6",
+        "@actions/core": "^1.2.7",
         "@actions/exec": "^1.0.4"
     },
     "devDependencies": {
         "@types/node": "^14.14.31",
-        "@typescript-eslint/parser": "^4.18.0",
+        "@typescript-eslint/parser": "^4.22.0",
         "@zeit/ncc": "^0.22.3",
         "eslint": "^7.21.0",
         "eslint-plugin-github": "^4.1.2",
