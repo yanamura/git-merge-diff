@@ -10,7 +10,7 @@
         "all": "npm run build && npm run format && npm run lint && npm run pack"
     },
     "dependencies": {
-        "@actions/core": "^1.2.7",
+        "@actions/core": "^1.4.0",
         "@actions/exec": "^1.1.0"
     },
     "devDependencies": {
