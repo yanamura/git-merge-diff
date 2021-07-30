@@ -14,7 +14,7 @@
         "@actions/exec": "^1.1.0"
     },
     "devDependencies": {
-        "@types/node": "^15.12.2",
+        "@types/node": "^16.4.7",
         "@typescript-eslint/parser": "^4.28.0",
         "@zeit/ncc": "^0.22.3",
         "eslint": "^7.31.0",
