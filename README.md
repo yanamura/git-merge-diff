@@ -6,7 +6,7 @@ This action generate git merge diff between tags.
 
 ## Diff between latest and previous tag
 ```yaml
-- uses: actions/checkout@v2
+- uses: actions/checkout@v3
   with:
     fetch-depth: 0
 - name: Diff
@@ -17,7 +17,7 @@ This action generate git merge diff between tags.
 or 
 
 ```yaml
-- uses: actions/checkout@v2
+- uses: actions/checkout@v3
   with:
     fetch-depth: 0
 - name: Diff
@@ -30,7 +30,7 @@ or
 
 ## Diff between HEAD and latest tag
 ```yaml
-- uses: actions/checkout@v2
+- uses: actions/checkout@v3
   with:
     fetch-depth: 0
 - name: Diff
@@ -43,7 +43,7 @@ or
 
 ## Diff between specified tags
 ```yaml
-- uses: actions/checkout@v2
+- uses: actions/checkout@v3
   with:
     fetch-depth: 0
 - name: Diff
@@ -65,7 +65,7 @@ steps.<step id>.outputs.diff
 # Senario
 
 ```yaml
-- uses: actions/checkout@v2
+- uses: actions/checkout@v3
   with:
     fetch-depth: 0
 - name: Diff
