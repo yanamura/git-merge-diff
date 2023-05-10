@@ -90,6 +90,7 @@ function run() {
             core.setFailed(error.message);
         });
         core.info(output);
+        output = removeStarLines(output);
         output = output.replace(/%/g, '%25');
         output = output.replace(/\n/g, '%0A');
         output = output.replace(/\r/g, '%0D');
@@ -99,6 +100,11 @@ function run() {
             core.setFailed(error.message);
         });
     });
+}
+function removeStarLines(inputString, lineBreak = '\n') {
+    const lines = inputString.split(lineBreak);
+    const filteredLines = lines.filter(line => line.trim() !== '*');
+    return filteredLines.join(lineBreak);
 }
 run();
 
