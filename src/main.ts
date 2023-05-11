@@ -65,10 +65,7 @@ async function run(): Promise<void> {
 
   core.info(output)
 
-  const setoutputCommand = `echo "diff=${output}" >> $GITHUB_OUTPUT`
-  exec.exec(setoutputCommand).catch(error => {
-    core.setFailed(error.message)
-  })
+  core.setOutput("diff", output)
 }
 
 function removeStarLines(inputString: string, lineBreak: string = '\n'): string {

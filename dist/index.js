@@ -95,10 +95,7 @@ function run() {
         output = output.replace(/\n/g, '%0A');
         output = output.replace(/\r/g, '%0D');
         core.info(output);
-        const setoutputCommand = `echo "diff=${output}" >> $GITHUB_OUTPUT`;
-        exec.exec(setoutputCommand).catch(error => {
-            core.setFailed(error.message);
-        });
+        core.setOutput("diff", output);
     });
 }
 function removeStarLines(inputString, lineBreak = '\n') {
