@@ -91,9 +91,6 @@ function run() {
         });
         core.info(output);
         output = removeStarLines(output);
-        output = output.replace(/%/g, '%25');
-        output = output.replace(/\n/g, '%0A');
-        output = output.replace(/\r/g, '%0D');
         core.info(output);
         core.setOutput("diff", output);
     });
