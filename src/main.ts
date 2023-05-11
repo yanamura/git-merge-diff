@@ -65,7 +65,7 @@ async function run(): Promise<void> {
 
   core.info(output)
 
-  const setoutputCommand = `echo "::set-output name=diff::${output}"`
+  const setoutputCommand = `echo "diff=${output}" >> $GITHUB_OUTPUT`
   exec.exec(setoutputCommand).catch(error => {
     core.setFailed(error.message)
   })
